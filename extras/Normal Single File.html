@@ -1,0 +1,21 @@
+<script>
+    const targetUrl = 'https://cdn.jsdelivr.net/gh/NoahsAmazingTutoringHelp/Noahs-Calculus-Tutor@refs/heads/master/index.html';
+    const baseUrl   = 'https://cdn.jsdelivr.net/gh/NoahsAmazingTutoringHelp/Noahs-Calculus-Tutor@master/';
+
+    fetch(targetUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+        })
+        .then(html => {
+            if (!html.includes('<base')) {
+                html = html.replace('<head>', `<head><base href="${baseUrl}">`);
+            }
+            document.open();
+            document.write(html);
+            document.close();
+        })
+        .catch(error => {
+            document.body.innerHTML = `<h3 style="color:#f87171">Failed to load content.</h3><p>${error.message}</p>`;
+        });
+</script>
